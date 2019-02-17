@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SwaggerExample.Infrastructures;
 using SwaggerExample.Infrastructures.Headers;
+using SwaggerExample.ViewModel;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SwaggerExample
@@ -22,7 +23,11 @@ namespace SwaggerExample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(new ProducesResponseTypeAttribute(typeof(ErrorViewModel), 400));
+                    options.Filters.Add(new ProducesResponseTypeAttribute(typeof(ErrorViewModel), 500));
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddApiVersioning();

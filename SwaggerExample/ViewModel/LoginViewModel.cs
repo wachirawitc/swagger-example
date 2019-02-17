@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SwaggerExample.ViewModel
@@ -17,5 +18,8 @@ namespace SwaggerExample.ViewModel
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime LoginDate { get; set; }
+
+        [DefaultValue(true)]
+        public bool IsRemember { get; set; }
     }
 }
