@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.Extensions.Options;
+using SwaggerExample.Infrastructures;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SwaggerExample
 {
@@ -21,17 +24,16 @@ namespace SwaggerExample
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new Info
-                {
-                    Title = "Example Version 1",
-                    Version = "v1"
-                });
-            });
+            services.AddApiVersioning();
+
+            services.AddVersionedApiExplorer(options => options.GroupNameFormat = "'v'VVV");
+
+            services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+            services.AddSwaggerGen();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -48,7 +50,14 @@ namespace SwaggerExample
             {
                 var swaggerJsonBasePath = string.IsNullOrWhiteSpace(option.RoutePrefix) ? "." : "..";
 
-                option.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Example Version 1");
+                foreach (var description in provider.ApiVersionDescriptions)
+                {
+                    string url = $"{swaggerJsonBasePath}/swagger/{description.GroupName}/swagger.json";
+
+                    option.SwaggerEndpoint(url, description.GroupName.ToUpperInvariant());
+                }
+
+                //option.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Example Version 1");
             });
 
             app.UseHttpsRedirection();
