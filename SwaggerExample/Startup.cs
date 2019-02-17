@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using SwaggerExample.Infrastructures;
+using SwaggerExample.Infrastructures.Headers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace SwaggerExample
@@ -30,7 +31,10 @@ namespace SwaggerExample
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
-            services.AddSwaggerGen();
+            services.AddSwaggerGen(options =>
+            {
+                options.OperationFilter<ImeiOperationFilter>();
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApiVersionDescriptionProvider provider)

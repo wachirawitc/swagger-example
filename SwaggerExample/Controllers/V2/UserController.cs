@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SwaggerExample.Constants;
+using SwaggerExample.Infrastructures.Constants;
 
 namespace SwaggerExample.Controllers.V2
 {

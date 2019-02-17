@@ -1,4 +1,4 @@
-﻿namespace SwaggerExample.Constants
+﻿namespace SwaggerExample.Infrastructures.Constants
 {
     public static class ApiVersioning
     {
