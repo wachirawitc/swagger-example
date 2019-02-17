@@ -11,11 +11,17 @@ namespace SwaggerExample.Controllers.V1
     {
         [HttpPost(nameof(Login))]
         [ProducesResponseType(typeof(LoginResponseViewModel), 200)]
-        public string Login(LoginViewModel model)
+        public ObjectResult Login(LoginViewModel model)
         {
             var header = Request.Headers;
             var imei = header["imei"].ToString();
-            return "Login from V1";
+            return Ok("Login from V1");
+        }
+
+        [HttpPost(nameof(GetUserInfo))]
+        public ObjectResult GetUserInfo(UserInfoRequestViewModel model)
+        {
+            return Ok($"Info of {model.UserName}");
         }
     }
 }
