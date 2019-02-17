@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using SwaggerExample.Infrastructures;
 using SwaggerExample.Infrastructures.Headers;
 using SwaggerExample.ViewModel;
@@ -28,6 +29,7 @@ namespace SwaggerExample
                     options.Filters.Add(new ProducesResponseTypeAttribute(typeof(ErrorViewModel), 400));
                     options.Filters.Add(new ProducesResponseTypeAttribute(typeof(ErrorViewModel), 500));
                 })
+                .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddApiVersioning();

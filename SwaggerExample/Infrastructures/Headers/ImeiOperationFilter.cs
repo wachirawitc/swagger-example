@@ -15,7 +15,7 @@ namespace SwaggerExample.Infrastructures.Headers
 
             operation.Parameters.Add(new NonBodyParameter
             {
-                Name = "Imei",
+                Name = "IMEI",
                 In = "header",
                 Type = "string",
                 Required = true
