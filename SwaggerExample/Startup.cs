@@ -65,8 +65,6 @@ namespace SwaggerExample
 
                     option.SwaggerEndpoint(url, description.GroupName.ToUpperInvariant());
                 }
-
-                //option.SwaggerEndpoint($"{swaggerJsonBasePath}/swagger/v1/swagger.json", "Example Version 1");
             });
 
             app.UseHttpsRedirection();
