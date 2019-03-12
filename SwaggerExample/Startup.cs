@@ -41,6 +41,7 @@ namespace SwaggerExample
             services.AddSwaggerGen(options =>
             {
                 options.OperationFilter<ImeiOperationFilter>();
+                options.EnableAnnotations();
             });
         }
 

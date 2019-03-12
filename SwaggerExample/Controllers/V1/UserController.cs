@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SwaggerExample.Infrastructures.Constants;
 using SwaggerExample.ViewModel;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace SwaggerExample.Controllers.V1
 {
@@ -10,6 +11,7 @@ namespace SwaggerExample.Controllers.V1
     public class UserController : ControllerBase
     {
         [HttpPost(nameof(Login))]
+        [SwaggerOperation(Summary = "Authentication", Description = "Use login to authentication")]
         [ProducesResponseType(typeof(LoginResponseViewModel), 200)]
         public ObjectResult Login(LoginViewModel model)
         {
